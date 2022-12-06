@@ -1,11 +1,25 @@
 Package: artists
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Top artists songs and albums
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Authors@R:
+  c(person("Bruno", "Da Silva Ferreira",
+            email = "Bruno.DaSilvaFerreira@unil.ch",
+            role = c("aut", "cre")),
+    person("Emile", "Paris",
+            email = "emile.paris@unil.ch",
+            role = c("aut", "cre")),
+    person("Renato", "reynoso",
+            email = "rreynoso@unil.ch",
+            role = "ctb"),
+    person("Doga", "Ozden",
+            email = "dogaelcin.ozden@unil.ch",
+            role = "ctb")
+    )
+Maintainer: Bruno Da Silva Ferreira <Bruno.DaSilvaFerreira@unil.ch>
+Description: This package provide different function related to your favourite artists !
+    TopSongslyrics: gives you the top 10 songs of the artist of your choice with the lyrics of the songs.
+    TopAlbums: gives you the albums and the release date of the artist of your choice.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
