@@ -1,14 +1,14 @@
 #' @title Top songs lyrics
-#' @author
-#' @param name
-#' @param tfgraph
-#' @param worldcloud
-#' @param lang
-#' @param environment.return
-#' @return
+#' @author Emile Paris
+#' @param name The name of the artist of your choice.
+#' @param tfgraph If True, returns a term-frequency graph.
+#' @param worldcloud If True, returns a worldcloud.
+#' @param lang Language of the lyrics.
+#' @param environment.return If True, saves all computations in global environment.
+#' @return returns the top 10 songs of your artist with the lyrics.
 #' @export
 #' @examples
-#'
+#'Topsongslyrics(name = "Lady Gaga", tfgraph = FALSE, wordcloud = FALSE, lang = "en", environment.return = TRUE)
 Topsongslyrics <- function(name, tfgraph = FALSE, wordcloud = FALSE, lang, environment.return = TRUE) {
   name <- name %>%
     gsub("[^[:alnum:]]", "", .) %>%
@@ -150,12 +150,12 @@ Topsongslyrics <- function(name, tfgraph = FALSE, wordcloud = FALSE, lang, envir
 
 
 #' @title Top Albums
-#' @author
-#' @param name
-#' @return
+#' @author Emile Paris
+#' @param name The name of the artist of your choice.
+#' @return returns the albums and the release date of your artist.
 #' @export
 #' @examples
-#'
+#'TopAlbums("Lana Del Rey")
 TopAlbums <- function(name) {
 
   name <- name %>%
