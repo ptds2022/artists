@@ -1,3 +1,14 @@
+#' @title Top songs lyrics
+#' @author
+#' @param name
+#' @param tfgraph
+#' @param worldcloud
+#' @param lang
+#' @param environment.return
+#' @return
+#' @export
+#' @examples
+#'
 Topsongslyrics <- function(name, tfgraph = FALSE, wordcloud = FALSE, lang, environment.return = TRUE) {
   name <- name %>%
     gsub("[^[:alnum:]]", "", .) %>%
@@ -138,7 +149,13 @@ Topsongslyrics <- function(name, tfgraph = FALSE, wordcloud = FALSE, lang, envir
 
 
 
-
+#' @title Top Albums
+#' @author
+#' @param name
+#' @return
+#' @export
+#' @examples
+#'
 TopAlbums <- function(name) {
 
   name <- name %>%
