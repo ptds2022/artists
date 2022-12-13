@@ -17,11 +17,11 @@ Topsongslyrics(
 
 \item{tfgraph}{If True, returns a term-frequency graph.}
 
+\item{wordcloud}{If True, returns a worldcloud.}
+
 \item{lang}{Language of the lyrics.}
 
 \item{environment.return}{If True, saves all computations in global environment.}
-
-\item{worldcloud}{If True, returns a worldcloud.}
 }
 \value{
 returns the top 10 songs of your artist with the lyrics.
@@ -30,7 +30,11 @@ returns the top 10 songs of your artist with the lyrics.
 Top songs lyrics
 }
 \examples{
-Topsongslyrics(name = "Lady Gaga", tfgraph = FALSE, wordcloud = FALSE, lang = "en", environment.return = TRUE)
+Topsongslyrics(name = "Lady Gaga",
+               tfgraph = TRUE,
+               wordcloud = TRUE,
+               lang = "en",
+               environment.return = TRUE)
 }
 \author{
 Emile Paris

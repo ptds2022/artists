@@ -2,18 +2,25 @@
 #' @author Emile Paris
 #' @param name The name of the artist of your choice.
 #' @param tfgraph If True, returns a term-frequency graph.
-#' @param worldcloud If True, returns a worldcloud.
+#' @param wordcloud If True, returns a worldcloud.
 #' @param lang Language of the lyrics.
 #' @param environment.return If True, saves all computations in global environment.
 #' @return returns the top 10 songs of your artist with the lyrics.
+#' @import magrittr stats stringr rvest quanteda quanteda.textstats lexicon tidytext ggplot2 dplyr quanteda.textplots
 #' @export
 #' @examples
-#'Topsongslyrics(name = "Lady Gaga", tfgraph = FALSE, wordcloud = FALSE, lang = "en", environment.return = TRUE)
+#'Topsongslyrics(name = "Lady Gaga",
+#'                tfgraph = TRUE,
+#'                wordcloud = TRUE,
+#'                lang = "en",
+#'                environment.return = TRUE)
 Topsongslyrics <- function(name, tfgraph = FALSE, wordcloud = FALSE, lang, environment.return = TRUE) {
   name <- name %>%
     gsub("[^[:alnum:]]", "", .) %>%
     gsub(" ", "-", .) %>%
     str_to_lower()
+
+  feature <- "." <- NULL
 
   html <- read_html(paste0("https://genius.com/artists/", name))
 
@@ -102,12 +109,12 @@ Topsongslyrics <- function(name, tfgraph = FALSE, wordcloud = FALSE, lang, envir
   )
   tk <- tk %>%
     tokens_tolower() %>%
-    tokens_remove(stop_words$word) %>%
+    tokens_remove(tidytext::stop_words$word) %>%
     tokens_remove(stopwords(lang, source = "stopwords-iso"))
   tk <- tokens_replace(
     tk,
-    pattern = hash_lemmas$token,
-    replacement = hash_lemmas$lemma
+    pattern = lexicon::hash_lemmas$token,
+    replacement = lexicon::hash_lemmas$lemma
   )
   dfm <- dfm(tk)
   tfidf <- dfm_tfidf(dfm)
@@ -153,10 +160,13 @@ Topsongslyrics <- function(name, tfgraph = FALSE, wordcloud = FALSE, lang, envir
 #' @author Emile Paris
 #' @param name The name of the artist of your choice.
 #' @return returns the albums and the release date of your artist.
+#' @import rvest stringr magrittr
 #' @export
 #' @examples
 #'TopAlbums("Lana Del Rey")
 TopAlbums <- function(name) {
+
+  "." <- NULL
 
   name <- name %>%
     gsub("[^[:alnum:]]", "", .) %>%
