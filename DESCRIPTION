@@ -26,6 +26,7 @@ LazyData: true
 RoxygenNote: 7.2.3
 Imports: 
     dplyr,
+    geniusr,
     ggplot2,
     lexicon,
     magrittr,
@@ -33,7 +34,6 @@ Imports:
     quanteda.textplots,
     quanteda.textstats,
     rvest,
-    stats,
     stringr,
     tidytext
 Suggests: 

@@ -9,7 +9,8 @@ Topsongslyrics(
   tfgraph = FALSE,
   wordcloud = FALSE,
   lang,
-  environment.return = TRUE
+  environment.return = TRUE,
+  local = TRUE
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ Topsongslyrics(
 \item{lang}{Language of the lyrics.}
 
 \item{environment.return}{If True, saves all computations in global environment.}
+
+\item{local}{determine if the function is run locally or not.}
 }
 \value{
 returns the top 10 songs of your artist with the lyrics.
@@ -34,7 +37,8 @@ Topsongslyrics(name = "Lady Gaga",
                tfgraph = TRUE,
                wordcloud = TRUE,
                lang = "en",
-               environment.return = TRUE)
+               environment.return = TRUE,
+               local = TRUE)
 }
 \author{
 Emile Paris

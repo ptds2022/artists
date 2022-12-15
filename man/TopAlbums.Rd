@@ -4,10 +4,12 @@
 \alias{TopAlbums}
 \title{Top Albums}
 \usage{
-TopAlbums(name)
+TopAlbums(name, local = TRUE)
 }
 \arguments{
 \item{name}{The name of the artist of your choice.}
+
+\item{local}{determine if the function is run locally or not.}
 }
 \value{
 returns the albums and the release date of your artist.
@@ -16,7 +18,7 @@ returns the albums and the release date of your artist.
 Top Albums
 }
 \examples{
-TopAlbums("Lana Del Rey")
+TopAlbums("Lana Del Rey", local = TRUE)
 }
 \author{
 Emile Paris
