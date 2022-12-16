@@ -26,6 +26,8 @@ Topsongslyrics <- function(name, tfgraph = FALSE, wordcloud = FALSE, lang, envir
 
     feature <- "." <- frequency <- reorder <- NULL
 
+    options(HTTPUserAgent = "Bruno Da Silva Ferreira  Bruno.DaSilvaFerreira@unil.ch")
+
     html <- read_html(paste0("https://genius.com/artists/", name))
 
     titles <- html %>%
@@ -198,6 +200,8 @@ TopAlbums <- function(name, local = TRUE) {
       str_to_lower()
 
     "." <- NULL
+
+    options(HTTPUserAgent = "Bruno Da Silva Ferreira  Bruno.DaSilvaFerreira@unil.ch")
 
     html <- read_html(paste0("https://genius.com/artists/", name))
 
