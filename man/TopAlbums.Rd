@@ -12,7 +12,7 @@ TopAlbums(name, local = TRUE)
 \item{local}{determine if the function is run locally or not.}
 }
 \value{
-returns the albums and the release date of your artist.
+Return the name of the albums and the year of release of a specific artist (name).
 }
 \description{
 Top Albums

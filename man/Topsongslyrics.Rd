@@ -27,7 +27,7 @@ Topsongslyrics(
 \item{local}{determine if the function is run locally or not.}
 }
 \value{
-returns the top 10 songs of your artist with the lyrics.
+returns a dataframe with the 10 top songs and the lyrics for a given  artist (name) speaking in a special language (lang). Possibility to print a Term frequency graph and a wordcloud. Also, possibility to return directly in the environment the df, token, corpus, dtm, freq, and covariance matrix.
 }
 \description{
 Top songs lyrics

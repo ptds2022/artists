@@ -6,7 +6,7 @@
 #' @param lang Language of the lyrics.
 #' @param environment.return If True, saves all computations in global environment.
 #' @param local determine if the function is run locally or not.
-#' @return returns the top 10 songs of your artist with the lyrics.
+#' @return returns a dataframe with the 10 top songs and the lyrics for a given  artist (name) speaking in a special language (lang). Possibility to print a Term frequency graph and a wordcloud. Also, possibility to return directly in the environment the df, token, corpus, dtm, freq, and covariance matrix.
 #' @import magrittr stringr rvest quanteda quanteda.textstats lexicon tidytext ggplot2 dplyr quanteda.textplots geniusr
 #' @export
 #' @examples
@@ -16,17 +16,14 @@
 #'                lang = "en",
 #'                environment.return = TRUE,
 #'                local = TRUE)
-Topsongslyrics <- function(name, tfgraph = FALSE, wordcloud = FALSE, lang, environment.return = TRUE, local=TRUE) {
-
-  if (local==TRUE){
+Topsongslyrics <- function(name, tfgraph = FALSE, wordcloud = FALSE, lang, environment.return = TRUE, local = TRUE) {
+  if (local == TRUE) {
     name <- name %>%
       gsub("[^ a-zA-Z0-9]", "", .) %>%
       gsub(" ", "-", .) %>%
       str_to_lower()
 
     feature <- "." <- frequency <- reorder <- NULL
-
-    options(HTTPUserAgent = "Bruno Da Silva Ferreira  Bruno.DaSilvaFerreira@unil.ch")
 
     html <- read_html(paste0("https://genius.com/artists/", name))
 
@@ -100,12 +97,9 @@ Topsongslyrics <- function(name, tfgraph = FALSE, wordcloud = FALSE, lang, envir
     row.names(lyrics.df) <- top10.songs$song
 
     lyrics.df$Songs <- row.names(lyrics.df)
-  }
-  else{
-
-
+  } else {
     lyrics.df <- search_artist(name, n_results = 3, access_token = genius_token()) %>%
-      .[[1,1]] %>%
+      .[[1, 1]] %>%
       get_artist_songs_df(
         .,
         sort = "popularity",
@@ -113,13 +107,13 @@ Topsongslyrics <- function(name, tfgraph = FALSE, wordcloud = FALSE, lang, envir
         access_token = genius_token()
       )
 
-    lyrics.df$lyrics <- ''
+    lyrics.df$lyrics <- ""
 
-    for (i in seq(nrow(lyrics.df))){
+    for (i in seq(nrow(lyrics.df))) {
       a <- get_lyrics_id(lyrics.df$song_id[i], access_token = genius_token())
       lyrics.df$lyrics[i] <- paste(a$line, collapse = " ")
     }
-    lyrics.df <- lyrics.df[, c(2,8)]
+    lyrics.df <- lyrics.df[, c(2, 8)]
     return(lyrics.df)
   }
 
@@ -142,7 +136,7 @@ Topsongslyrics <- function(name, tfgraph = FALSE, wordcloud = FALSE, lang, envir
     pattern = lexicon::hash_lemmas$token,
     replacement = lexicon::hash_lemmas$lemma
   )
-  dfm <- dfm(tk)
+  dfm <- quanteda::dfm(tk)
   tfidf <- dfm_tfidf(dfm)
   freq <- textstat_frequency(dfm)
   co <- fcm(tk,
@@ -161,12 +155,13 @@ Topsongslyrics <- function(name, tfgraph = FALSE, wordcloud = FALSE, lang, envir
       coord_flip() +
       xlab("Frequency") +
       ylab("term")
+
     print(graph)
   }
 
 
   if (wordcloud == TRUE) {
-    textplot_wordcloud(dfm)
+    b <- textplot_wordcloud(dfm)
   }
   if (environment.return == TRUE) {
     .GlobalEnv$lyrics.df <- lyrics.df
@@ -177,7 +172,10 @@ Topsongslyrics <- function(name, tfgraph = FALSE, wordcloud = FALSE, lang, envir
     .GlobalEnv$co <- co
   }
 
-  return(lyrics.df)
+  my_list <- list("lyrics.df"=lyrics.df,"tk" = tk, "corpus"=corpus,"dfm"=dfm, "freq"=freq, "co"=co, "b"=b , "graph"=graph)
+  return(my_list)
+
+
 }
 
 
@@ -186,22 +184,19 @@ Topsongslyrics <- function(name, tfgraph = FALSE, wordcloud = FALSE, lang, envir
 #' @author Emile Paris
 #' @param name The name of the artist of your choice.
 #' @param local determine if the function is run locally or not.
-#' @return returns the albums and the release date of your artist.
+#' @return Return the name of the albums and the year of release of a specific artist (name).
 #' @import rvest stringr magrittr geniusr
 #' @export
 #' @examples
 #'TopAlbums("Lana Del Rey", local = TRUE)
 TopAlbums <- function(name, local = TRUE) {
-
-  if(local==TRUE){
+  if (local == TRUE) {
     name <- name %>%
       gsub("[^ a-zA-Z0-9]", "", .) %>%
       gsub(" ", "-", .) %>%
       str_to_lower()
 
     "." <- NULL
-
-    options(HTTPUserAgent = "Bruno Da Silva Ferreira  Bruno.DaSilvaFerreira@unil.ch")
 
     html <- read_html(paste0("https://genius.com/artists/", name))
 
@@ -218,35 +213,137 @@ TopAlbums <- function(name, local = TRUE) {
     TopAlbums <- cbind(year, album)
     colnames(TopAlbums) <- c("year", "album")
     TopAlbums$year <- as.numeric(TopAlbums$year)
-  }
-  else {
-
+  } else {
     df <- search_artist(name, n_results = 3, access_token = genius_token()) %>%
-      .[[1,1]] %>%
+      .[[1, 1]] %>%
       get_artist_songs_df(
         .,
-        sort =  "popularity",
+        sort = "popularity",
         include_features = FALSE,
         access_token = genius_token()
       )
-    TopAlbums <- data.frame(year= c('', '', "", "","","","", ""), album=c('', '', "", "","","","", ""))
-    for (i in seq(nrow(df))){
-
-      a <-df$song_id[i] %>% get_song(., access_token = genius_token())
-      if(is.null(a$content$album$id)){
+    TopAlbums <- data.frame(year = c("", "", "", "", "", "", "", ""), album = c("", "", "", "", "", "", "", ""))
+    for (i in seq(nrow(df))) {
+      a <- df$song_id[i] %>% get_song(., access_token = genius_token())
+      if (is.null(a$content$album$id)) {
         TopAlbums$album[i] <- b$content$name
-      }
-      else{
+      } else {
         b <- a$content$album$id %>% get_album(., access_token = genius_token())
         TopAlbums$album[i] <- b$content$name
         TopAlbums$year[i] <- b$content$release_date
       }
-
-
     }
   }
 
 
 
   return(TopAlbums)
+}
+
+
+#' @title Compare year
+#' @author Emile Paris
+#' @param name.x The name of the first artist of your choice.
+#' @param name.y The name of the second artist of your choice.
+#' @param local determine if the function is run locally or not.
+#' @return return a density plot of the year of activity & popularity of the two artists.
+#' @import rvest stringr magrittr plyr dplyr ggplot2 hrbrthemes plotly geniusr
+#' @export
+#' @examples
+#'compare.year("lady gaga", "lana del rey", local = TRUE)
+compare.year <- function(name.x, name.y, local = TRUE) {
+
+  name <- year <- NULL
+
+  x <- TopAlbums(name.x, local)
+  x$name <- name.x
+
+  y <- TopAlbums(name.y, local)
+  y$name <- name.y
+
+  compare.df <- rbind(x, y)
+
+  compare.df <- compare.df %>%
+    group_by(name, year) %>%
+    count()
+
+  plot <- ggplot(data = compare.df, aes(x = year, group = name, fill = name)) +
+    geom_density(adjust = 1.5, alpha = .4) +
+    theme_ipsum()
+
+  ggplotly(plot)
+}
+
+
+
+
+
+#' @title Compare lyrics
+#' @author Emile Paris
+#' @param name.x The name of the first artist of your choice.
+#' @param name.y The name of the second artist of your choice.
+#' @param language The language of the lyrics you want.
+#' @return returns a plot that compares the lyrics between the two artists.
+#' @import magrittr stringr rvest quanteda quanteda.textstats lexicon tidytext ggplot2 dplyr quanteda.textplots seededlda reshape2 geniusr
+#' @export
+#' @examples
+#'compare.lyrics("lady gaga", "lana del rey")
+compare.lyrics <- function(name.x, name.y, language = 'en'){
+
+  lyrics <- NULL
+
+  a <- Topsongslyrics(name = name.x, tfgraph = TRUE, wordcloud = TRUE, lang = language, environment.return = FALSE)
+  A <- tibble(name = name.x)
+  A$lyrics <- a$lyrics.df %>% summarize(lyrics = paste(lyrics, collapse = ","))
+
+  b <- Topsongslyrics(name = name.y, tfgraph = TRUE, wordcloud = TRUE, lang = language, environment.return = FALSE)
+  B <- tibble(name = name.y)
+  B$lyrics <- b$lyrics.df %>% summarize(lyrics = paste(lyrics, collapse = ","))
+
+  compare <- rbind(A, B)
+
+  cp <- corpus(compare$lyrics$lyrics)
+  tk <- tokens(
+    cp,
+    remove_numbers = TRUE,
+    remove_punct = TRUE,
+    remove_symbols = TRUE,
+    remove_separators = TRUE
+  )
+  tk <- tk %>%
+    tokens_tolower() %>%
+    tokens_remove(tidytext::stop_words$word)
+
+  dfm <- dfm(tk)
+
+  keyness <- textstat_keyness(
+    dfm,
+    target = "text1"
+  )
+
+  # LDA
+  lda <- textmodel_lda(
+    x = dfm,
+    k = 3
+  )
+
+  seededlda::terms(lda, 5)
+
+  phi.long <- reshape2::melt(
+    lda$phi,
+    varnames = c("Topic", "Term"),
+    value.name = "Phi"
+  )
+
+  theta.long <- reshape2::melt(
+    lda$theta,
+    varnames = c("Doc", "Topic"),
+    value.name = "Theta"
+  )
+
+
+  # Return a list containing the keyness plot and the phi.long data frame
+  my_list= list(keyness_plot = textplot_keyness(keyness, labelsize = 4), phi.long = phi.long, theta.long=theta.long)
+  return(my_list)
+
 }

@@ -28,12 +28,17 @@ Imports:
     dplyr,
     geniusr,
     ggplot2,
+    hrbrthemes,
     lexicon,
     magrittr,
+    plotly,
+    plyr,
     quanteda,
     quanteda.textplots,
     quanteda.textstats,
+    reshape2,
     rvest,
+    seededlda,
     stringr,
     tidytext
 Suggests: 
