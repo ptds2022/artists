@@ -20,7 +20,9 @@ returns a plot that compares the lyrics between the two artists.
 Compare lyrics
 }
 \examples{
-compare.year("lady gaga", "lana del rey", local = TRUE)
+\dontrun{
+compare.lyrics("lady gaga", "lana del rey")
+}
 }
 \author{
 Emile Paris

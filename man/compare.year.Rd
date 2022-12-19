@@ -20,7 +20,9 @@ return a density plot of the year of activity & popularity of the two artists.
 Compare year
 }
 \examples{
+\dontrun{
 compare.year("lady gaga", "lana del rey", local = TRUE)
+}
 }
 \author{
 Emile Paris

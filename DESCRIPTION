@@ -32,15 +32,25 @@ Imports:
     lexicon,
     magrittr,
     plotly,
+    plotrix,
     plyr,
     quanteda,
     quanteda.textplots,
     quanteda.textstats,
+    RColorBrewer,
     reshape2,
     rvest,
     seededlda,
+    sentimentr,
+    shiny,
+    shinydashboard,
     stringr,
     tidytext
 Suggests: 
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+VignetteBuilder: knitr
+Depends: 
+    R (>= 2.10)

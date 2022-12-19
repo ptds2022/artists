@@ -33,12 +33,14 @@ returns a dataframe with the 10 top songs and the lyrics for a given  artist (na
 Top songs lyrics
 }
 \examples{
+\dontrun{
 Topsongslyrics(name = "Lady Gaga",
                tfgraph = TRUE,
                wordcloud = TRUE,
                lang = "en",
                environment.return = TRUE,
                local = TRUE)
+}
 }
 \author{
 Emile Paris

@@ -18,7 +18,9 @@ Return the name of the albums and the year of release of a specific artist (name
 Top Albums
 }
 \examples{
+\dontrun{
 TopAlbums("Lana Del Rey", local = TRUE)
+}
 }
 \author{
 Emile Paris
