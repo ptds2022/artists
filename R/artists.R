@@ -251,7 +251,8 @@ TopAlbums <- function(name, local = TRUE) {
 #' @param name.y The name of the second artist of your choice.
 #' @param local determine if the function is run locally or not.
 #' @return return a density plot of the year of activity & popularity of the two artists.
-#' @import rvest stringr magrittr plyr dplyr ggplot2 hrbrthemes plotly geniusr
+#' @importFrom plotly ggplotly
+#' @import rvest stringr magrittr dplyr ggplot2 hrbrthemes geniusr
 #' @export
 #' @examples
 #' \dontrun{
@@ -367,16 +368,15 @@ compare.lyrics <- function(name.x, name.y, language = 'en'){
 #' @param artists a dataframe with one column containing the artists you want.
 #' @param lang a dataframe with one column containing the abrevations of the languages you want (example: English must be "en").
 #' @return returns a dashboard
-#' @import shiny shinydashboard plotrix sentimentr RColorBrewer magrittr stringr rvest quanteda quanteda.textstats lexicon tidytext ggplot2 quanteda.textplots geniusr dplyr hrbrthemes plotly seededlda reshape2
+#' @importFrom sentimentr sentiment_by
+#' @import shiny shinydashboard plotrix RColorBrewer magrittr stringr rvest quanteda quanteda.textstats tidytext ggplot2 quanteda.textplots dplyr geniusr hrbrthemes seededlda reshape2
 #' @export
 #' @examples
 #' \dontrun{
 #' Geniusdashboard(artists.df, lang.df)
 #' }
 Geniusdashboard <- function(artists, lang) {
-  packages <- c("shiny", "shinydashboard", "magrittr", "plotrix", "sentimentr", "RColorBrewer", "stringr", "rvest", "quanteda", "quanteda.textstats", "lexicon", "tidytext", "ggplot2", "quanteda.textplots", "geniusr", "dplyr", "hrbrthemes", "plotly", "seededlda", "reshape2")
-  lapply(packages, require, character.only = TRUE)
-  stop_words <- hash_lemmas <- frequency <- reorder <- feature <- name <- year <- lyrics <- element_id <- Songs <- Total <- relfreq <- compare_artists <- Topic <- Phi <- Term <- Theta <- Doc <- NULL
+  stop_words <- hash_lemmas <- frequency <- reorder <- feature <- "." <- sentiment <- name <- year <- lyrics <- element_id <- Songs <- Total <- relfreq <- compare_artists <- Topic <- Phi <- Term <- Theta <- Doc <- NULL
   ui <- dashboardPage(
     skin = "purple",
     dashboardHeader(title = "Text Analysis and Comparison Tool", titleWidth = 350),

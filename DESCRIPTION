@@ -33,7 +33,6 @@ Imports:
     magrittr,
     plotly,
     plotrix,
-    plyr,
     quanteda,
     quanteda.textplots,
     quanteda.textstats,
