@@ -1,5 +1,4 @@
 test_that("Topsongslyrics returns a list", {
-  skip_on_cran()
   expect_type(Topsongslyrics(name = "Lady Gaga",
                              tfgraph = TRUE,
                              wordcloud = TRUE,
@@ -8,7 +7,6 @@ test_that("Topsongslyrics returns a list", {
 })
 
 test_that("Topsongslyrics returns a list of lenght 8", {
-  skip_on_cran()
   expect_length(Topsongslyrics(name = "Lady Gaga",
                                tfgraph = TRUE,
                                wordcloud = TRUE,
@@ -17,32 +15,26 @@ test_that("Topsongslyrics returns a list of lenght 8", {
 })
 
 test_that("TopAlbums returns a dataframe", {
-  skip_on_cran()
   expect_is(TopAlbums("Lana Del Rey"), "data.frame")
 })
 
 test_that("TopAlbums returns a dataframe of lenght 2", {
-  skip_on_cran()
   expect_length(TopAlbums("Lana Del Rey"), 2)
 })
 
 test_that("Compare.year returns a list", {
-  skip_on_cran()
   expect_type(compare.year("lady gaga", "lana del rey"), "list")
 })
 
 test_that("Compare.year returns a list of length 8", {
-  skip_on_cran()
   expect_length(compare.year("lady gaga", "lana del rey"), 8)
 })
 
 test_that("Compare.lyrics returns a list", {
-  skip_on_cran()
   expect_type(compare.lyrics("lady gaga", "lana del rey"), "list")
 })
 
 test_that("Compare.lyrics returns a list of length of 8", {
-  skip_on_cran()
   expect_length(compare.lyrics("lady gaga", "lana del rey"), 3)
 })
 
