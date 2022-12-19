@@ -54,3 +54,4 @@ test_that("Compare.lyrics returns a list of length of 8", {
   skip_on_cran()
   expect_length(compare.lyrics("lady gaga", "lana del rey"), 3)
 })
+docs
