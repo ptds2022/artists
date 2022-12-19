@@ -17,3 +17,78 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(artists)
 ```
+
+# Artists package
+
+## Introduction
+
+This vignette describes the use of the functions of the package "artists". We have five functions:
+
+- Topsongslyrics
+- TopAlbum
+- Compare.year
+- Compare.lyrics
+- Geniusdashboard
+
+In this vignette we explain you the use of those functions with some examples.
+
+## Topsongslyrics
+
+This function returns the top 10 songs of the artists you like with their lyrics. You also have the possibility to print a term frequency graph, a worlcloud and return directly in the environment the following variables: df, token, corpus, dtm, freq and covariance matrix.
+
+Example of use for the artist Lady Gaga:
+
+```{r}
+# Topsongslyrics(
+#   name = "Lady Gaga",
+#   tfgraph = TRUE,
+#   wordcloud = TRUE,
+#   lang = "en",
+#   environment.return = TRUE,
+#   local = TRUE
+# )
+```
+
+## TopAlbum
+
+This functions returns the name and the released year of the albums of the artists you like.
+
+Example of use for the artist Lana Del Rey:
+
+```{r}
+# TopAlbums("Lana Del Rey", local = TRUE)
+```
+
+## Compare.year
+
+This functions returns a density plot of the year of activity & popularity of two artists you like.
+
+Example of use with the artists Lady Gaga and Lana Del Rey:
+
+```{r}
+# compare.year("lady gaga", "lana del rey", local = TRUE)
+```
+
+## Compare.lyrics
+
+This function returns a plot that compares the lyrics between two artists you like.
+
+Example of use with the artists Lady Gaga and Lana Del Rey:
+
+```{r}
+# compare.lyrics("lady gaga", "lana del rey")
+```
+
+## Geniusdashboard
+
+This functions launches a shiny app dashboard with the following interactions:
+
+- By choosing one artist of your choice the dashboard displays a term frequency plot, an average sentiment plot, a sentiments by song plot and a sentiments globally plot.
+- By choosing two artists of your choice the dashboard displays between the two artists a comparison of a popular albums distribution, an LDA analysis with a theta plot and a phi plot, and a keyness plot.
+
+Example of use:
+
+```{r}
+# Geniusdashboard(artists.df, lang.df)
+```
+
