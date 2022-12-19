@@ -41,8 +41,11 @@ This functions launches a shiny app dashboard with the following interactions:
 Installing the package:
 
 #> install.packages("devtools")
+
 library(devtools)
+
 install_github("ptds2022/artists")
+
 library(artists)
 
 #> Enjoy your new functions !
